@@ -19,9 +19,10 @@ exports.postRecipeHandler = async (event) => {
 
     // Get id and name from the body of the request
     const body = JSON.parse(event.body);
-    const id = body.id;
+    const title = body.title;
+    const id = body.title.replace(/ +/g, '-').toLowerCase();;
+    const date = new Date().toLocaleDateString();
     const img = body.img;
-    const title = body.name;
     const ingredients = body.ingredients;
     const instructions = body.instructions;
     const tags = body.tags;
@@ -32,6 +33,7 @@ exports.postRecipeHandler = async (event) => {
         TableName : tableName,
         Item: { 
             id : id, 
+            date: date,
             img: img,
             title: title,
             ingredients: ingredients,
