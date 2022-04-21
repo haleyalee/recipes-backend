@@ -1,8 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: recipes-backend
+Description: >-
+  recipes-backend
+
 Transform:
 - AWS::Serverless-2016-10-31
+
 Resources:
+  # This is a Lambda function config associated with the source code: get-all-recipes.js
   getAllRecipesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -10,23 +14,21 @@ Resources:
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all recipes
-        from a DynamoDB table.
+      Description: A simple example includes a HTTP get method to get all recipes from a DynamoDB table.
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: RecipeTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
       Environment:
         Variables:
-          RECIPE_TABLE:
-            Ref: RecipeTable
+          RECIPE_TABLE: !Ref RecipeTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /recipes
             Method: GET
-      CodeUri: getAllRecipesFunction
+
+  # This is a Lambda function config associated with the source code: get-recipe-by-id.js
   getRecipeByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -34,23 +36,21 @@ Resources:
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get one recipe by
-        id from a DynamoDB table.
+      Description: A simple example includes a HTTP get method to get one recipe by id from a DynamoDB table.
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: RecipeTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
       Environment:
         Variables:
-          RECIPE_TABLE:
-            Ref: RecipeTable
+          RECIPE_TABLE: !Ref RecipeTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /recipe/{id}
             Method: GET
-      CodeUri: getRecipeByIdFunction
+
+  # This is a Lambda function config associated with the source code: post-recipe.js
   postRecipeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -58,23 +58,21 @@ Resources:
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP post method to add one recipe
-        to a DynamoDB table.
+      Description: A simple example includes a HTTP post method to add one recipe to a DynamoDB table.
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: RecipeTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
       Environment:
         Variables:
-          RECIPE_TABLE:
-            Ref: RecipeTable
+          RECIPE_TABLE: !Ref RecipeTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /recipe
             Method: POST
-      CodeUri: postRecipeFunction
+
+  # This is a Lambda function config associated with the source code: delete-recipe.js
   deleteRecipeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -82,23 +80,21 @@ Resources:
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP delete method to delete one recipe
-        by id from a DynamoDB table.
+      Description: A simple example includes a HTTP delete method to delete one recipe by id from a DynamoDB table.
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: RecipeTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref RecipeTable
       Environment:
         Variables:
-          RECIPE_TABLE:
-            Ref: RecipeTable
+          RECIPE_TABLE: !Ref RecipeTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /recipe/{id}
             Method: DELETE
-      CodeUri: deleteRecipeFunction
+
+  # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
   RecipeTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
@@ -108,8 +104,8 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
+
 Outputs:
   WebEndpoint:
-    Description: API Gateway endpoint URL for Prod stage
-    Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

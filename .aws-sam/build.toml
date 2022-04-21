@@ -6,6 +6,6 @@ codeuri = "/home/haleyalee/projects/recipes-backend"
 runtime = "nodejs14.x"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["getAllItemsFunction", "getByIdFunction", "putItemFunction"]
+functions = ["getAllRecipesFunction", "getRecipeByIdFunction", "postRecipeFunction", "deleteRecipeFunction"]
 
 [layer_build_definitions]
