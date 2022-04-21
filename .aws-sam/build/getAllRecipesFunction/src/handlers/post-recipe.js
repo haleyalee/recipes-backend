@@ -8,11 +8,11 @@ const docClient = new dynamodb.DocumentClient();
 const tableName = process.env.RECIPE_TABLE;
 
 /**
- * A simple example includes a HTTP post method to add one item to a DynamoDB table.
+ * A simple example includes a HTTP post method to add one recipe to a DynamoDB table.
  */
-exports.postPlantHandler = async (event) => {
+exports.postRecipeHandler = async (event) => {
     if (event.httpMethod !== 'POST') {
-        throw new Error(`postPlantMethod only accepts POST method, you tried: ${event.httpMethod} method.`);
+        throw new Error(`postRecipeMethod only accepts POST method, you tried: ${event.httpMethod} method.`);
     }
     // All log statements are written to CloudWatch
     console.info('received:', event);
@@ -20,6 +20,7 @@ exports.postPlantHandler = async (event) => {
     // Get id and name from the body of the request
     const body = JSON.parse(event.body);
     const id = body.id;
+    const img = body.img;
     const title = body.name;
     const ingredients = body.ingredients;
     const instructions = body.instructions;
@@ -31,6 +32,7 @@ exports.postPlantHandler = async (event) => {
         TableName : tableName,
         Item: { 
             id : id, 
+            img: img,
             title: title,
             ingredients: ingredients,
             instructions: instructions,
