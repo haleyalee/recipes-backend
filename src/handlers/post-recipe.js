@@ -21,7 +21,7 @@ exports.postRecipeHandler = async (event) => {
     const body = JSON.parse(event.body);
     const id = body.id;
     const img = body.img;
-    const title = body.name;
+    const title = body.title;
     const ingredients = body.ingredients;
     const instructions = body.instructions;
     const tags = body.tags;
