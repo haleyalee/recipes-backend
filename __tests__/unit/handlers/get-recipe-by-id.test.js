@@ -1,10 +1,10 @@
 // Import all functions from get-by-id.js 
-const lambda = require('../../../src/handlers/get-by-id.js'); 
+const lambda = require('../../../src/handlers/get-recipe-by-id.js'); 
 // Import dynamodb from aws-sdk 
 const dynamodb = require('aws-sdk/clients/dynamodb'); 
  
 // This includes all tests for getByIdHandler() 
-describe('Test getByIdHandler', () => { 
+describe('Test getRecipeByIdHandler', () => { 
     let getSpy; 
  
     // Test one-time setup and teardown, see more in https://jestjs.io/docs/en/setup-teardown 
@@ -35,8 +35,8 @@ describe('Test getByIdHandler', () => {
             } 
         } 
  
-        // Invoke getByIdHandler() 
-        const result = await lambda.getByIdHandler(event); 
+        // Invoke getRecipeByIdHandler() 
+        const result = await lambda.getRecipeByIdHandler(event); 
  
         const expectedResult = { 
             statusCode: 200, 

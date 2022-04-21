@@ -1,10 +1,10 @@
 // Import all functions from put-item.js 
-const lambda = require('../../../src/handlers/put-item.js'); 
+const lambda = require('../../../src/handlers/post-recipe.js'); 
 // Import dynamodb from aws-sdk 
 const dynamodb = require('aws-sdk/clients/dynamodb'); 
  
 // This includes all tests for putItemHandler() 
-describe('Test putItemHandler', function () { 
+describe('Test postRecipeHandler', function () { 
     let putSpy; 
  
     // Test one-time setup and teardown, see more in https://jestjs.io/docs/en/setup-teardown 
@@ -19,7 +19,7 @@ describe('Test putItemHandler', function () {
         putSpy.mockRestore(); 
     }); 
  
-    // This test invokes putItemHandler() and compare the result  
+    // This test invokes postRecipeHandler() and compare the result  
     it('should add id to the table', async () => { 
         const returnedItem = { id: 'id1', name: 'name1' }; 
  
@@ -33,8 +33,8 @@ describe('Test putItemHandler', function () {
             body: '{"id": "id1","name": "name1"}' 
         }; 
      
-        // Invoke putItemHandler() 
-        const result = await lambda.putItemHandler(event); 
+        // Invoke postRecipeHandler() 
+        const result = await lambda.postRecipeHandler(event); 
         const expectedResult = { 
             statusCode: 200, 
             body: JSON.stringify(returnedItem) 
